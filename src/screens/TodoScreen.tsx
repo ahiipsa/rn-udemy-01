@@ -7,10 +7,15 @@ import {TTodo} from '../types';
 type Props = {
   todo: TTodo;
   goBack: () => void;
+  onRemove: (id: string) => void;
 };
-export const TodoScreen: React.FC<Props> = ({todo, goBack}) => {
+export const TodoScreen: React.FC<Props> = ({todo, goBack, onRemove}) => {
   const handleTouchGoBack = () => {
     goBack();
+  };
+
+  const handleTouchRemove = () => {
+    onRemove(todo.id);
   };
 
   return (
@@ -23,7 +28,7 @@ export const TodoScreen: React.FC<Props> = ({todo, goBack}) => {
           <Button title="Back" color={THEME.COLORS_GRAY} onPress={handleTouchGoBack} />
         </View>
         <View style={styles.button}>
-          <Button title="Remove" color={THEME.COLORS_DANGER} onPress={handleTouchGoBack} />
+          <Button title="Remove" color={THEME.COLORS_DANGER} onPress={handleTouchRemove} />
         </View>
       </View>
     </View>

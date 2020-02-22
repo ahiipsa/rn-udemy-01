@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {StyleSheet, View} from 'react-native';
+import {Alert, StyleSheet, View} from 'react-native';
 
 import {NavBar} from './src/components/NavBar';
 import {MainScreen} from './src/screens/MainScreen';
@@ -24,8 +24,37 @@ export default function App() {
   };
 
   const removeTodo = (id) => {
+    if (id === todoId) {
+      setTodoId(null);
+    }
     setTodos((items) => items.filter((item) => item.id !== id));
   };
+
+  const removeTodoWithAlert = (id) => {
+    const todo = todos.find((item) => item.id === id);
+
+    if (!todo) {
+      return;
+    }
+
+    // Works on both Android and iOS
+    Alert.alert(
+      'Delete todo',
+      `Are you sure to delete toto ${todo.title}?`,
+      [
+        {
+          text: 'Cancel',
+          style: 'cancel',
+        },
+        {
+          text: 'Delete',
+          style: 'destructive',
+          onPress: () => removeTodo(id)
+        },
+      ],
+      {cancelable: false},
+    );
+  }
 
   const openTodo = (id) => {
     setTodoId(id);
@@ -38,14 +67,14 @@ export default function App() {
   let content = (
     <MainScreen
       addTodo={addTodo}
-      removeTodo={removeTodo}
+      onRemoveTodo={removeTodoWithAlert}
       todos={todos}
       onTouchTodo={openTodo}
     />);
 
   if (todoId) {
     const todo = todos.find((item) => item.id === todoId);
-    content = (<TodoScreen todo={todo} goBack={goBack} />);
+    content = (<TodoScreen todo={todo} goBack={goBack} onRemove={removeTodoWithAlert} />);
   }
 
   return (
