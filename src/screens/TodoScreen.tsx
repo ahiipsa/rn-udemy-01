@@ -1,5 +1,6 @@
 import React from 'react';
 import {Button, StyleSheet, Text, View} from 'react-native';
+import {Card} from '../components/ui/Card';
 import {THEME} from '../styles/theme';
 import {TTodo} from '../types';
 
@@ -14,7 +15,9 @@ export const TodoScreen: React.FC<Props> = ({todo, goBack}) => {
 
   return (
     <View>
-      <Text>{todo.title}</Text>
+      <Card style={styles.card}>
+        <Text style={styles.title}>{todo.title}</Text>
+      </Card>
       <View style={styles.buttons}>
         <View style={styles.button}>
           <Button title="Back" color={THEME.COLORS_GRAY} onPress={handleTouchGoBack} />
@@ -34,5 +37,12 @@ const styles = StyleSheet.create({
   },
   button: {
     width: '40%'
+  },
+  title: {
+    fontSize: 20,
+  },
+  card: {
+    marginBottom: 20,
+    padding: 10,
   }
 });
