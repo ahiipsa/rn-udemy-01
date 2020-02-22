@@ -1,5 +1,6 @@
 import React, {useCallback} from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import {THEME} from '../styles/theme';
 import {TTodo} from '../types';
 
 type Props = {
@@ -38,7 +39,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 15,
     borderWidth: 1,
-    borderColor: '#eee',
+    borderColor: THEME.COLORS_GRAY,
     borderRadius: 5,
     marginBottom: 10,
   },

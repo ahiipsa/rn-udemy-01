@@ -1,5 +1,6 @@
 import React, {useCallback, useState} from 'react';
 import {View, StyleSheet, TextInput, Button, Alert} from 'react-native';
+import {THEME} from '../styles/theme';
 
 type Props = {
   onSubmit: (title: string) => void,
@@ -46,7 +47,7 @@ const styles = StyleSheet.create({
     width: '70%',
     borderStyle: 'solid',
     borderBottomWidth: 2,
-    borderBottomColor: '#3949ab',
+    borderBottomColor: THEME.COLORS_MAIN,
     padding: 10
   }
 });

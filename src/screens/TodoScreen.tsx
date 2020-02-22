@@ -1,5 +1,6 @@
 import React from 'react';
 import {Button, StyleSheet, Text, View} from 'react-native';
+import {THEME} from '../styles/theme';
 import {TTodo} from '../types';
 
 type Props = {
@@ -14,9 +15,24 @@ export const TodoScreen: React.FC<Props> = ({todo, goBack}) => {
   return (
     <View>
       <Text>{todo.title}</Text>
-      <Button title="Back" onPress={handleTouchGoBack} />
+      <View style={styles.buttons}>
+        <View style={styles.button}>
+          <Button title="Back" color={THEME.COLORS_GRAY} onPress={handleTouchGoBack} />
+        </View>
+        <View style={styles.button}>
+          <Button title="Remove" color={THEME.COLORS_DANGER} onPress={handleTouchGoBack} />
+        </View>
+      </View>
     </View>
   );
 };
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  buttons: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  button: {
+    width: '40%'
+  }
+});

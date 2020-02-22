@@ -1,5 +1,6 @@
 import React from 'react';
 import {Text, View, StyleSheet} from 'react-native';
+import {THEME} from '../styles/theme';
 
 
 type Props = {title: string};
@@ -16,11 +17,11 @@ const styles = StyleSheet.create({
     height: 70,
     alignItems: 'center',
     justifyContent: 'flex-end',
-    backgroundColor: '#3949ab',
+    backgroundColor: THEME.COLORS_MAIN,
     paddingBottom: 10
   },
   text: {
-    color: 'white',
+    color: THEME.COLORS_WHITE,
     fontSize: 20,
   }
 });
