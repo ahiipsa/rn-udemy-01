@@ -8,14 +8,18 @@ export default function App() {
 
   const [todos, setTodos] = useState([]);
 
-  const addTodo = useCallback((title) => {
+  const addTodo = (title) => {
     const newTodo = {
       id: Date.now().toString(),
       title,
     };
 
     setTodos(prev => [newTodo, ...prev]);
-  }, []);
+  };
+
+  const removeTodo = (id) => {
+    setTodos((items) => items.filter((item) => item.id !== id));
+  };
 
   return (
     <View>
@@ -25,7 +29,7 @@ export default function App() {
         <FlatList
           data={todos}
           keyExtractor={(item) => item.id}
-          renderItem={({item}) => <Todo todo={item} />}
+          renderItem={({item}) => <Todo todo={item} onRemove={removeTodo} />}
         />
       </View>
     </View>
