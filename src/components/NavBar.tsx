@@ -3,7 +3,7 @@ import {Text, View, StyleSheet} from 'react-native';
 
 
 type Props = {title: string};
-const NavBar: React.FC<Props> = ({title}) => {
+export const NavBar: React.FC<Props> = ({title}) => {
   return (
     <View style={styles.navbar}>
       <Text style={styles.text}>{title}</Text>
@@ -24,5 +24,3 @@ const styles = StyleSheet.create({
     fontSize: 20,
   }
 });
-
-export default NavBar;

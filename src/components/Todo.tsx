@@ -1,23 +1,30 @@
 import React, {useCallback} from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import {TTodo} from '../types';
 
 type Props = {
-  todo: {
-    title: string,
-    id: string
-  },
-  onRemove: (id: string) => void,
+  todo: TTodo;
+  onRemove: (id: string) => void;
+  onTouch: (id: string) => void;
 }
 
 
-export const Todo: React.FC<Props> = ({ todo, onRemove }) => {
+export const Todo: React.FC<Props> = ({ todo, onRemove, onTouch }) => {
 
   const handleRemove = () => {
     onRemove(todo.id);
   };
 
+  const handleTouch = () => {
+    onTouch(todo.id);
+  };
+
   return (
-    <TouchableOpacity activeOpacity={0.5} onLongPress={handleRemove}>
+    <TouchableOpacity
+      activeOpacity={0.5}
+      onPress={handleTouch}
+      onLongPress={handleRemove}
+    >
       <View style={styles.root}>
         <Text style={styles.text}>{todo.title}</Text>
       </View>
