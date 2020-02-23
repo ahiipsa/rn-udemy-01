@@ -1,5 +1,6 @@
-import React from 'react';
-import {FlatList, Image, StyleSheet, View} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {FlatList, Image, StyleSheet, View, Dimensions} from 'react-native';
+import {THEME} from '../styles/theme';
 import {TTodo} from '../types';
 import {AddTodo} from '../components/AddTodo';
 import {Todo} from '../components/Todo';
@@ -12,12 +13,29 @@ type Props = {
   onTouchTodo: (id: string) => void;
 }
 export const MainScreen: React.FC<Props> = ({addTodo, todos, onRemoveTodo, onTouchTodo}) => {
+  const [deviceWidth, setDeviceWidth] = useState(
+    );
+
+  useEffect(() => {
+    const update = () => {
+      const width = Dimensions.get('window').width - THEME.PADDING_HORIZONTAL * 2;
+      setDeviceWidth(width);
+    };
+
+    Dimensions.addEventListener('change', update);
+    return () => {
+      Dimensions.removeEventListener('change', update);
+    };
+  });
+
   let content = (
-    <FlatList
-      data={todos}
-      keyExtractor={(item) => item.id}
-      renderItem={({item}) => <Todo todo={item} onRemove={onRemoveTodo} onTouch={onTouchTodo} />}
-    />
+    <View style={{width: deviceWidth}}>
+      <FlatList
+        data={todos}
+        keyExtractor={(item) => item.id}
+        renderItem={({item}) => <Todo todo={item} onRemove={onRemoveTodo} onTouch={onTouchTodo} />}
+      />
+    </View>
   );
 
   if (!todos.length) {
