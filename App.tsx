@@ -11,7 +11,7 @@ const defaultTodoList = [
 ];
 
 export default function App() {
-  const [todos, setTodos] = useState([...defaultTodoList]);
+  const [todos, setTodos] = useState([]);
   const [todoId, setTodoId] = useState(null);
 
   const addTodo = (title) => {
