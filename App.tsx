@@ -1,9 +1,17 @@
 import React, {useState} from 'react';
 import {Alert, StyleSheet, View} from 'react-native';
-
+import * as Font from 'expo-font';
+import {AppLoading} from 'expo';
 import {NavBar} from './src/components/NavBar';
 import {MainScreen} from './src/screens/MainScreen';
 import {TodoScreen} from './src/screens/TodoScreen';
+
+async function loadApplication() {
+  return await Font.loadAsync({
+    'roboto-regular': require('./assets/fonts/Roboto-Regular.ttf'),
+    'roboto-bold': require('./assets/fonts/Roboto-Bold.ttf'),
+  })
+}
 
 const defaultTodoList = [
   {id: '1', title: 'Learn React Native'},
@@ -11,8 +19,19 @@ const defaultTodoList = [
 ];
 
 export default function App() {
-  const [todos, setTodos] = useState([]);
+  const [isAppReady, setAppReady] = useState(false);
+  const [todos, setTodos] = useState([...defaultTodoList]);
   const [todoId, setTodoId] = useState(null);
+
+  if (!isAppReady) {
+    return (
+      <AppLoading
+        startAsync={loadApplication}
+        onError={(err) => console.log(err)}
+        onFinish={() => setAppReady(true)}
+      />
+    )
+  }
 
   const addTodo = (title) => {
     const newTodo = {

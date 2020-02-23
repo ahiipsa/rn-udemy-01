@@ -1,13 +1,14 @@
 import React from 'react';
-import {Text, View, StyleSheet} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import {THEME} from '../styles/theme';
+import {AppText} from './ui/AppText';
 
 
 type Props = {title: string};
 export const NavBar: React.FC<Props> = ({title}) => {
   return (
     <View style={styles.navbar}>
-      <Text style={styles.text}>{title}</Text>
+      <AppText style={styles.text}>{title}</AppText>
     </View>
   );
 };

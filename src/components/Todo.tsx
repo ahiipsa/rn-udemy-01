@@ -1,7 +1,8 @@
-import React, {useCallback} from 'react';
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import React from 'react';
+import {View, StyleSheet, TouchableOpacity} from 'react-native';
 import {THEME} from '../styles/theme';
 import {TTodo} from '../types';
+import {AppText} from './ui/AppText';
 
 type Props = {
   todo: TTodo;
@@ -27,7 +28,7 @@ export const Todo: React.FC<Props> = ({ todo, onRemove, onTouch }) => {
       onLongPress={handleRemove}
     >
       <View style={styles.root}>
-        <Text style={styles.text}>{todo.title}</Text>
+        <AppText style={styles.text}>{todo.title}</AppText>
       </View>
     </TouchableOpacity>
   );

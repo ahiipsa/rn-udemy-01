@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
-import {Button, StyleSheet, Text, View} from 'react-native';
+import {Button, StyleSheet, View} from 'react-native';
 import {ModalTodoEdit} from '../components/ModalTodoEdit';
+import {AppText} from '../components/ui/AppText';
 import {Card} from '../components/ui/Card';
 import {THEME} from '../styles/theme';
 import {TTodo} from '../types';
@@ -47,7 +48,7 @@ export const TodoScreen: React.FC<Props> = ({todo, goBack, onRemove, onSave}) =>
         onSave={handleSave}
       />
       <Card style={styles.card}>
-        <Text style={styles.title}>{todo.title}</Text>
+        <AppText bold style={styles.title}>{todo.title}</AppText>
         <Button title="Edit" onPress={handleOpenModal} />
       </Card>
       <View style={styles.buttons}>
