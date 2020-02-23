@@ -24,7 +24,7 @@ export const MainScreen: React.FC<Props> = ({addTodo, todos, onRemoveTodo, onTou
 
     Dimensions.addEventListener('change', update);
     return () => {
-      Dimensions.removeEventListener('change', update);
+      Dimensions.removeEventListener('change', update)
     };
   });
 

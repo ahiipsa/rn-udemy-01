@@ -1,6 +1,7 @@
 import {AppLoading} from 'expo';
 import React, {useContext, useState} from 'react';
 import {Alert, StyleSheet, View} from 'react-native';
+import {ScreenContext} from '../context/screen/screenContext';
 import {TodoContext} from '../context/todo/todoContext';
 import {MainScreen} from '../screens/MainScreen';
 import {TodoScreen} from '../screens/TodoScreen';
@@ -9,9 +10,8 @@ import {NavBar} from './NavBar';
 
 type Props = {};
 export const LayoutMain: React.FC<Props> = () => {
-  const [todoId, setTodoId] = useState(null);
-
   const {todos, updateTodo, removeTodo, addTodo} = useContext(TodoContext);
+  const {goToMainScreen, todoId, changeScreen} = useContext(ScreenContext);
 
   const removeTodoWithAlert = (id) => {
     const todo = todos.find((item) => item.id === id);
@@ -32,7 +32,10 @@ export const LayoutMain: React.FC<Props> = () => {
         {
           text: 'Delete',
           style: 'destructive',
-          onPress: () => removeTodo(id)
+          onPress: () => {
+            goToMainScreen();
+            removeTodo(id);
+          }
         },
       ],
       {cancelable: false},
@@ -40,11 +43,11 @@ export const LayoutMain: React.FC<Props> = () => {
   };
 
   const openTodo = (id) => {
-    setTodoId(id);
+    changeScreen(id);
   };
 
   const goBack = () => {
-    setTodoId(null);
+    goToMainScreen();
   };
 
   let content = (

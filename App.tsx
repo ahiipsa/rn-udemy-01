@@ -3,6 +3,7 @@ import {StyleSheet} from 'react-native';
 import * as Font from 'expo-font';
 import {AppLoading} from 'expo';
 import {LayoutMain} from './src/components/LayoutMain';
+import {ScreenState} from './src/context/screen/ScreenState';
 import {TodoState} from './src/context/todo/TodoState';
 import {THEME} from './src/styles/theme';
 
@@ -32,9 +33,11 @@ export default function App() {
   }
 
   return (
-    <TodoState>
-      <LayoutMain />
-    </TodoState>
+    <ScreenState>
+      <TodoState>
+        <LayoutMain />
+      </TodoState>
+    </ScreenState>
   );
 };
 
