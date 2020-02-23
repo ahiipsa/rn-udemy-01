@@ -10,7 +10,6 @@ type Props = {
   onTouch: (id: string) => void;
 }
 
-
 export const Todo: React.FC<Props> = ({ todo, onRemove, onTouch }) => {
 
   const handleRemove = () => {

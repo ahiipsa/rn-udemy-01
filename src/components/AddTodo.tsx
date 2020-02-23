@@ -1,5 +1,6 @@
 import React, {useCallback, useState} from 'react';
 import {View, StyleSheet, TextInput, Button, Alert} from 'react-native';
+import {AntDesign} from '@expo/vector-icons';
 import {THEME} from '../styles/theme';
 
 type Props = {
@@ -31,7 +32,10 @@ export const AddTodo: React.FC<Props> = ({ onSubmit }) => {
         autoCorrect={false}
         autoCapitalize="none"
       />
-      <Button title="Add" onPress={handleOnPress} />
+      <AntDesign.Button onPress={handleOnPress} name="pluscircleo">
+        Add
+      </AntDesign.Button>
+      {/*<Button title="Add" onPress={handleOnPress} />*/}
     </View>
   );
 };
@@ -44,7 +48,7 @@ const styles = StyleSheet.create({
     marginBottom: 15,
   },
   input: {
-    width: '70%',
+    width: '60%',
     borderStyle: 'solid',
     borderBottomWidth: 2,
     borderBottomColor: THEME.COLORS_MAIN,
