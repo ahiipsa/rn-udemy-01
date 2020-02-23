@@ -1,5 +1,5 @@
 import React, {useCallback, useState} from 'react';
-import {View, StyleSheet, TextInput, Button, Alert} from 'react-native';
+import {View, StyleSheet, TextInput, Keyboard, Alert} from 'react-native';
 import {AntDesign} from '@expo/vector-icons';
 import {THEME} from '../styles/theme';
 
@@ -20,6 +20,7 @@ export const AddTodo: React.FC<Props> = ({ onSubmit }) => {
 
     onSubmit(value);
     setValue('');
+    Keyboard.dismiss();
   }, [value]);
 
   return (
