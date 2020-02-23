@@ -1,5 +1,6 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Button, StyleSheet, Text, View} from 'react-native';
+import {ModalTodoEdit} from '../components/ModalTodoEdit';
 import {Card} from '../components/ui/Card';
 import {THEME} from '../styles/theme';
 import {TTodo} from '../types';
@@ -10,6 +11,8 @@ type Props = {
   onRemove: (id: string) => void;
 };
 export const TodoScreen: React.FC<Props> = ({todo, goBack, onRemove}) => {
+
+  const [modal, setModal] = useState(false);
   const handleTouchGoBack = () => {
     goBack();
   };
@@ -18,10 +21,20 @@ export const TodoScreen: React.FC<Props> = ({todo, goBack, onRemove}) => {
     onRemove(todo.id);
   };
 
+  const handleCloseModal = () => {
+    setModal(false);
+  };
+
+  const handleOpenModal = () => {
+    setModal(true);
+  };
+
   return (
     <View>
+      <ModalTodoEdit visible={modal} onCancel={handleCloseModal} />
       <Card style={styles.card}>
         <Text style={styles.title}>{todo.title}</Text>
+        <Button title="Edit" onPress={handleOpenModal} />
       </Card>
       <View style={styles.buttons}>
         <View style={styles.button}>
