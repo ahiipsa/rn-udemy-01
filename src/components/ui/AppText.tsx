@@ -3,7 +3,7 @@ import {StyleProp, StyleSheet, Text, TextStyle} from 'react-native';
 
 type Props = {
   bold?: boolean;
-  style: StyleProp<TextStyle>;
+  style?: StyleProp<TextStyle>;
 };
 export const AppText: React.FC<Props> = ({style, bold = false, children}) => {
   const mainStyle = bold ? styles.bold : styles.default;

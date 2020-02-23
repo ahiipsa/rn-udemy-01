@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {Alert, Button, Modal, StyleSheet, TextInput, View} from 'react-native';
 import {THEME} from '../styles/theme';
+import {AppButton} from './ui/AppButton';
 
 type Props = {
   visible: boolean;
@@ -32,11 +33,14 @@ export const ModalTodoEdit: React.FC<Props> = ({visible, onCancel, value, onSave
           autoCorrect={false}
         />
         <View style={styles.buttons}>
-          <Button title="Cancel" onPress={onCancel} color={THEME.COLORS_DANGER} />
-          <Button title="Save" onPress={handleSave} />
+          <AppButton onPress={onCancel} color={THEME.COLORS_DANGER}>
+            Cancel
+          </AppButton>
+          <AppButton onPress={handleSave}>
+            Save
+          </AppButton>
         </View>
       </View>
-
     </Modal>
   );
 };

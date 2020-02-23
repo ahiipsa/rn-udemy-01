@@ -35,7 +35,6 @@ export const AddTodo: React.FC<Props> = ({ onSubmit }) => {
       <AntDesign.Button onPress={handleOnPress} name="pluscircleo">
         Add
       </AntDesign.Button>
-      {/*<Button title="Add" onPress={handleOnPress} />*/}
     </View>
   );
 };
