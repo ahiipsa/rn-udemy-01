@@ -1,19 +1,39 @@
-import React from 'react';
-import {Button, Modal, StyleSheet, TextInput, View} from 'react-native';
+import React, {useState} from 'react';
+import {Alert, Button, Modal, StyleSheet, TextInput, View} from 'react-native';
 import {THEME} from '../styles/theme';
 
 type Props = {
   visible: boolean;
   onCancel: () => void;
+  value: string;
+  onSave: (title: string) => void;
 };
-export const ModalTodoEdit: React.FC<Props> = ({visible, onCancel}) => {
+export const ModalTodoEdit: React.FC<Props> = ({visible, onCancel, value, onSave}) => {
+  const [title, setTitle] = useState(value);
+
+  const handleSave = () => {
+    if (title.trim().length < 3) {
+      Alert.alert('Error', 'Minimum 3 characters');
+      return;
+    }
+
+    onSave(title);
+  };
+
   return (
     <Modal visible={visible} animationType="slide">
       <View style={styles.wrap}>
-        <TextInput style={styles.input} placeholder="Type todo name..." autoCapitalize="none" autoCorrect={false} />
+        <TextInput
+          style={styles.input}
+          placeholder="Type todo name..."
+          autoCapitalize="none"
+          value={title}
+          onChangeText={setTitle}
+          autoCorrect={false}
+        />
         <View style={styles.buttons}>
           <Button title="Cancel" onPress={onCancel} color={THEME.COLORS_DANGER} />
-          <Button title="Save" onPress={() => false} />
+          <Button title="Save" onPress={handleSave} />
         </View>
       </View>
 

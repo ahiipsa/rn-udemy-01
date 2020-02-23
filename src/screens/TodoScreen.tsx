@@ -8,9 +8,10 @@ import {TTodo} from '../types';
 type Props = {
   todo: TTodo;
   goBack: () => void;
+  onSave: (todo: TTodo) => void;
   onRemove: (id: string) => void;
 };
-export const TodoScreen: React.FC<Props> = ({todo, goBack, onRemove}) => {
+export const TodoScreen: React.FC<Props> = ({todo, goBack, onRemove, onSave}) => {
 
   const [modal, setModal] = useState(false);
   const handleTouchGoBack = () => {
@@ -29,9 +30,22 @@ export const TodoScreen: React.FC<Props> = ({todo, goBack, onRemove}) => {
     setModal(true);
   };
 
+  const handleSave = (title) => {
+    onSave({
+      ...todo,
+      title,
+    });
+    setModal(false);
+  };
+
   return (
     <View>
-      <ModalTodoEdit visible={modal} onCancel={handleCloseModal} />
+      <ModalTodoEdit
+        value={todo.title}
+        visible={modal}
+        onCancel={handleCloseModal}
+        onSave={handleSave}
+      />
       <Card style={styles.card}>
         <Text style={styles.title}>{todo.title}</Text>
         <Button title="Edit" onPress={handleOpenModal} />

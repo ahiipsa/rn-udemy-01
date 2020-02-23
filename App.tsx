@@ -54,7 +54,16 @@ export default function App() {
       ],
       {cancelable: false},
     );
-  }
+  };
+
+  const updateTodo = (todo) => {
+    setTodos((old) => old.map((item) => {
+      if (item.id === todo.id) {
+        return {...todo};
+      }
+      return item;
+    }))
+  };
 
   const openTodo = (id) => {
     setTodoId(id);
@@ -74,7 +83,13 @@ export default function App() {
 
   if (todoId) {
     const todo = todos.find((item) => item.id === todoId);
-    content = (<TodoScreen todo={todo} goBack={goBack} onRemove={removeTodoWithAlert} />);
+    content = (
+      <TodoScreen
+        goBack={goBack}
+        todo={todo}
+        onSave={updateTodo}
+        onRemove={removeTodoWithAlert}
+      />);
   }
 
   return (
