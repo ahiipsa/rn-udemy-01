@@ -21,6 +21,11 @@ export const ModalTodoEdit: React.FC<Props> = ({visible, onCancel, value, onSave
     onSave(title);
   };
 
+  const cancelHandler = () => {
+    setTitle(value);
+    onCancel();
+  }
+
   return (
     <Modal visible={visible} animationType="slide">
       <View style={styles.wrap}>
@@ -33,7 +38,7 @@ export const ModalTodoEdit: React.FC<Props> = ({visible, onCancel, value, onSave
           autoCorrect={false}
         />
         <View style={styles.buttons}>
-          <AppButton onPress={onCancel} color={THEME.COLORS_DANGER}>
+          <AppButton onPress={cancelHandler} color={THEME.COLORS_DANGER}>
             Cancel
           </AppButton>
           <AppButton onPress={handleSave}>
@@ -58,6 +63,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 2,
     width: '80%',
     fontSize: 18,
+    color: 'black',
   },
   wrap: {
     flex: 1,

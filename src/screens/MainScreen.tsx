@@ -1,20 +1,18 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {FlatList, Image, StyleSheet, View, Dimensions} from 'react-native';
+import {ScreenContext} from '../context/screen/screenContext';
+import {TodoContext} from '../context/todo/todoContext';
 import {THEME} from '../styles/theme';
 import {TTodo} from '../types';
 import {AddTodo} from '../components/AddTodo';
 import {Todo} from '../components/Todo';
 
 const toItemsPng = require('../../assets/no-items.png');
-type Props = {
-  todos: TTodo[];
-  addTodo: (title: string) => void;
-  onRemoveTodo: (id: string) => void;
-  onTouchTodo: (id: string) => void;
-}
-export const MainScreen: React.FC<Props> = ({addTodo, todos, onRemoveTodo, onTouchTodo}) => {
-  const [deviceWidth, setDeviceWidth] = useState(
-    );
+type Props = {};
+export const MainScreen: React.FC<Props> = ({}) => {
+  const {todos, addTodo, removeTodoWithAlert} = useContext(TodoContext);
+  const {changeScreen} = useContext(ScreenContext);
+  const [deviceWidth, setDeviceWidth] = useState();
 
   useEffect(() => {
     const update = () => {
@@ -33,7 +31,14 @@ export const MainScreen: React.FC<Props> = ({addTodo, todos, onRemoveTodo, onTou
       <FlatList
         data={todos}
         keyExtractor={(item) => item.id}
-        renderItem={({item}) => <Todo todo={item} onRemove={onRemoveTodo} onTouch={onTouchTodo} />}
+        renderItem={({item}) => (
+          <Todo
+            todo={item}
+            onRemove={removeTodoWithAlert}
+            onTouch={() => changeScreen(item.id)}
+          />
+          )
+        }
       />
     </View>
   );

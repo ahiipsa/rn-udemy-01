@@ -6,6 +6,7 @@ type TTodoState = {
   addTodo?: (title: string) => void;
   removeTodo?: (id: string) => void;
   updateTodo?: (todo: TTodo) => void;
+  removeTodoWithAlert?: (id: string) => void;
 }
 
 const initialState = {

@@ -10,70 +10,13 @@ import {NavBar} from './NavBar';
 
 type Props = {};
 export const LayoutMain: React.FC<Props> = () => {
-  const {todos, updateTodo, removeTodo, addTodo} = useContext(TodoContext);
-  const {goToMainScreen, todoId, changeScreen} = useContext(ScreenContext);
-
-  const removeTodoWithAlert = (id) => {
-    const todo = todos.find((item) => item.id === id);
-
-    if (!todo) {
-      return;
-    }
-
-    // Works on both Android and iOS
-    Alert.alert(
-      'Delete todo',
-      `Are you sure to delete toto ${todo.title}?`,
-      [
-        {
-          text: 'Cancel',
-          style: 'cancel',
-        },
-        {
-          text: 'Delete',
-          style: 'destructive',
-          onPress: () => {
-            goToMainScreen();
-            removeTodo(id);
-          }
-        },
-      ],
-      {cancelable: false},
-    );
-  };
-
-  const openTodo = (id) => {
-    changeScreen(id);
-  };
-
-  const goBack = () => {
-    goToMainScreen();
-  };
-
-  let content = (
-    <MainScreen
-      addTodo={addTodo}
-      onRemoveTodo={removeTodoWithAlert}
-      todos={todos}
-      onTouchTodo={openTodo}
-    />);
-
-  if (todoId) {
-    const todo = todos.find((item) => item.id === todoId);
-    content = (
-      <TodoScreen
-        goBack={goBack}
-        todo={todo}
-        onSave={updateTodo}
-        onRemove={removeTodoWithAlert}
-      />);
-  }
+  const {todoId} = useContext(ScreenContext);
 
   return (
     <View>
       <NavBar title="Todo App" />
       <View style={styles.container}>
-        {content}
+        {todoId ? <TodoScreen/> : <MainScreen />}
       </View>
     </View>
   );

@@ -1,28 +1,30 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {StyleSheet, View, Dimensions} from 'react-native';
 import {AntDesign, FontAwesome} from '@expo/vector-icons';
 import {ModalTodoEdit} from '../components/ModalTodoEdit';
 import {AppButton} from '../components/ui/AppButton';
 import {AppText} from '../components/ui/AppText';
 import {Card} from '../components/ui/Card';
+import {ScreenContext} from '../context/screen/screenContext';
+import {TodoContext} from '../context/todo/todoContext';
 import {THEME} from '../styles/theme';
 import {TTodo} from '../types';
 
 type Props = {
-  todo: TTodo;
-  goBack: () => void;
-  onSave: (todo: TTodo) => void;
-  onRemove: (id: string) => void;
 };
-export const TodoScreen: React.FC<Props> = ({todo, goBack, onRemove, onSave}) => {
+export const TodoScreen: React.FC<Props> = () => {
+  const {todos, removeTodoWithAlert, updateTodo} = useContext(TodoContext);
+  const {todoId, goToMainScreen} = useContext(ScreenContext);
+
+  const todo = todos.find((item) => item.id === todoId);
 
   const [modal, setModal] = useState(false);
   const handleTouchGoBack = () => {
-    goBack();
+    goToMainScreen();
   };
 
   const handleTouchRemove = () => {
-    onRemove(todo.id);
+    removeTodoWithAlert(todoId);
   };
 
   const handleCloseModal = () => {
@@ -34,7 +36,7 @@ export const TodoScreen: React.FC<Props> = ({todo, goBack, onRemove, onSave}) =>
   };
 
   const handleSave = (title) => {
-    onSave({
+    updateTodo({
       ...todo,
       title,
     });
