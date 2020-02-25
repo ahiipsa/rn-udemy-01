@@ -20,9 +20,16 @@ export const fetchTodoList = () => {
 };
 
 export const updateTodo = ({todo}) => {
-  return fetch(`${config.apiHost}/todos/${todo.id}`, {
+  return fetch(`${config.apiHost}/todos/${todo.id}.json`, {
     method: 'PUT',
     headers: {...defaultHeaders},
     body: JSON.stringify({...todo}),
+  });
+};
+
+export const removeTodo = ({id}) => {
+  return fetch(`${config.apiHost}/todos/${id}.json`, {
+    method: 'DELETE',
+    headers: {...defaultHeaders},
   });
 };

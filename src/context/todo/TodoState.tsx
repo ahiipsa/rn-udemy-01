@@ -47,7 +47,10 @@ export const TodoState: React.FC<Props> = ({children}) => {
     }
   };
 
-  const removeTodo = (id) => dispatch({type: TODO_REMOVE, payload: {id}});
+  const removeTodo = async (id) => {
+    await api.removeTodo({id});
+    dispatch({type: TODO_REMOVE, payload: {id}})
+  };
   const updateTodo = async (todo) => {
     await api.updateTodo({todo});
     dispatch({type: TODO_UPDATE, payload: {todo}})
@@ -59,9 +62,6 @@ export const TodoState: React.FC<Props> = ({children}) => {
     if (!todo) {
       return;
     }
-
-    console.log('### todo', todo);
-
 
     // Works on both Android and iOS
     Alert.alert(
