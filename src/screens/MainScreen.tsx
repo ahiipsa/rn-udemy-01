@@ -1,5 +1,7 @@
 import React, {useCallback, useContext, useEffect, useState} from 'react';
 import {FlatList, Image, StyleSheet, View, Dimensions} from 'react-native';
+import {AppButton} from '../components/ui/AppButton';
+import {AppText} from '../components/ui/AppText';
 import {Loader} from '../components/ui/Loader';
 import {ScreenContext} from '../context/screen/screenContext';
 import {TodoContext} from '../context/todo/todoContext';
@@ -68,6 +70,19 @@ export const MainScreen: React.FC<Props> = ({}) => {
     return (<Loader />);
   }
 
+  if (error) {
+    return (
+      <View style={styles.center}>
+        <AppText style={styles.error}>
+          {error}
+        </AppText>
+        <AppButton onPress={loadTodos}>
+          Retry
+        </AppButton>
+      </View>
+    );
+  }
+
   return (
     <View>
       <AddTodo onSubmit={addTodo} />
@@ -87,5 +102,14 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     resizeMode: 'contain',
+  },
+  center: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  error: {
+    color: THEME.COLORS_DANGER,
+    fontSize: 20,
   }
 });

@@ -33,10 +33,18 @@ export const TodoState: React.FC<Props> = ({children}) => {
 
   const fetchTodoList = async () => {
     showLoader();
-    const data = await api.fetchTodoList();
-    const todos = Object.keys(data).map((key) => ({...data[key], id: key}));
-    dispatch({type: FETCH_TODOS, payload: {todos}});
-    hideLoader();
+    clearError();
+    try {
+      const data = await api.fetchTodoList();
+      const todos = Object.keys(data).map((key) => ({...data[key], id: key}));
+      dispatch({type: FETCH_TODOS, payload: {todos}});
+    } catch (e) {
+      console.log('### error', e);
+
+      showError('Something wrong...');
+    } finally {
+      hideLoader();
+    }
   };
 
   const removeTodo = (id) => dispatch({type: TODO_REMOVE, payload: {id}});
