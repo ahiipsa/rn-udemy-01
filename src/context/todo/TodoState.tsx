@@ -32,13 +32,11 @@ export const TodoState: React.FC<Props> = ({children}) => {
   };
 
   const fetchTodoList = async () => {
+    showLoader();
     const data = await api.fetchTodoList();
-    console.log('### data', data);
-
     const todos = Object.keys(data).map((key) => ({...data[key], id: key}));
-
     dispatch({type: FETCH_TODOS, payload: {todos}});
-
+    hideLoader();
   };
 
   const removeTodo = (id) => dispatch({type: TODO_REMOVE, payload: {id}});
@@ -85,7 +83,7 @@ export const TodoState: React.FC<Props> = ({children}) => {
   return (
     <TodoContext.Provider value={{
       todos: state.todos,
-      loadding: state.loading,
+      loading: state.loading,
       error: state.error,
       fetchTodoList,
       addTodo,

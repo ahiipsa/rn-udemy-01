@@ -1,5 +1,6 @@
 import React, {useCallback, useContext, useEffect, useState} from 'react';
 import {FlatList, Image, StyleSheet, View, Dimensions} from 'react-native';
+import {Loader} from '../components/ui/Loader';
 import {ScreenContext} from '../context/screen/screenContext';
 import {TodoContext} from '../context/todo/todoContext';
 import {THEME} from '../styles/theme';
@@ -34,6 +35,8 @@ export const MainScreen: React.FC<Props> = ({}) => {
     };
   });
 
+
+
   let content = (
     <View style={{width: deviceWidth}}>
       <FlatList
@@ -51,6 +54,8 @@ export const MainScreen: React.FC<Props> = ({}) => {
     </View>
   );
 
+
+
   if (!todos.length) {
     content = (
       <View style={styles.imageWrap}>
@@ -58,6 +63,11 @@ export const MainScreen: React.FC<Props> = ({}) => {
       </View>
     );
   }
+
+  if (loading) {
+    return (<Loader />);
+  }
+
   return (
     <View>
       <AddTodo onSubmit={addTodo} />

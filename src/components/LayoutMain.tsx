@@ -13,7 +13,7 @@ export const LayoutMain: React.FC<Props> = () => {
   const {todoId} = useContext(ScreenContext);
 
   return (
-    <View>
+    <View style={styles.root}>
       <NavBar title="Todo App" />
       <View style={styles.container}>
         {todoId ? <TodoScreen/> : <MainScreen />}
@@ -23,7 +23,11 @@ export const LayoutMain: React.FC<Props> = () => {
 };
 
 const styles = StyleSheet.create({
+  root: {
+    flex: 1,
+  },
   container: {
+    flex: 1,
     paddingHorizontal: THEME.PADDING_HORIZONTAL,
     paddingVertical: 10,
   },
