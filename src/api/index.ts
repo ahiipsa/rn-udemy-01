@@ -18,3 +18,11 @@ export const fetchTodoList = () => {
     headers: {...defaultHeaders}
   }).then((response) => response.json());
 };
+
+export const updateTodo = ({todo}) => {
+  return fetch(`${config.apiHost}/todos/${todo.id}`, {
+    method: 'PUT',
+    headers: {...defaultHeaders},
+    body: JSON.stringify({...todo}),
+  });
+};

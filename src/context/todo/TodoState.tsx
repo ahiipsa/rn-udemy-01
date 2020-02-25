@@ -48,7 +48,10 @@ export const TodoState: React.FC<Props> = ({children}) => {
   };
 
   const removeTodo = (id) => dispatch({type: TODO_REMOVE, payload: {id}});
-  const updateTodo = (todo) => dispatch({type: TODO_UPDATE, payload: {todo}});
+  const updateTodo = async (todo) => {
+    await api.updateTodo({todo});
+    dispatch({type: TODO_UPDATE, payload: {todo}})
+  };
 
   const removeTodoWithAlert = (id) => {
     const todo = state.todos.find((item) => item.id === id);
