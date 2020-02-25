@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useCallback, useContext, useEffect, useState} from 'react';
 import {FlatList, Image, StyleSheet, View, Dimensions} from 'react-native';
 import {ScreenContext} from '../context/screen/screenContext';
 import {TodoContext} from '../context/todo/todoContext';
@@ -10,9 +10,17 @@ import {Todo} from '../components/Todo';
 const toItemsPng = require('../../assets/no-items.png');
 type Props = {};
 export const MainScreen: React.FC<Props> = ({}) => {
-  const {todos, addTodo, removeTodoWithAlert} = useContext(TodoContext);
+  const {todos, addTodo, removeTodoWithAlert, fetchTodoList, loading, error} = useContext(TodoContext);
   const {changeScreen} = useContext(ScreenContext);
   const [deviceWidth, setDeviceWidth] = useState();
+
+  const loadTodos = useCallback(async () => {
+    return await fetchTodoList();
+  }, []);
+
+  useEffect(() => {
+    loadTodos();
+  }, []);
 
   useEffect(() => {
     const update = () => {

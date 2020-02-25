@@ -1,17 +1,23 @@
 import React, {useContext, useReducer} from 'react';
 import {Alert} from 'react-native';
-import {TODO_ADD, TODO_REMOVE, TODO_UPDATE} from '../../constants/actionTypes';
+import * as api from '../../api';
+import {
+  CLEAR_ERROR, FETCH_TODOS,
+  HIDE_LOADER,
+  SHOW_ERROR,
+  SHOW_LOADER,
+  TODO_ADD,
+  TODO_REMOVE,
+  TODO_UPDATE,
+} from '../../constants/actionTypes';
 import {ScreenContext} from '../screen/screenContext';
 import {TodoContext} from './todoContext';
 import {todoReducer} from './todoReducer';
 
-const defaultTodoList = [
-  {id: '1', title: 'Learn React Native'},
-  {id: '2', title: 'Create Application'},
-];
-
 const initialState = {
-  todos: [...defaultTodoList],
+  todos: [],
+  loading: false,
+  error: null,
 };
 
 type Props = {};
@@ -19,7 +25,22 @@ export const TodoState: React.FC<Props> = ({children}) => {
   const [state, dispatch] = useReducer(todoReducer, initialState);
   const {goToMainScreen} = useContext(ScreenContext);
 
-  const addTodo = (title) => dispatch({type: TODO_ADD, payload: {title}});
+  const addTodo = async (title) => {
+    const data = await api.createTodo({title});
+
+    dispatch({type: TODO_ADD, payload: {title, id: data.name}});
+  };
+
+  const fetchTodoList = async () => {
+    const data = await api.fetchTodoList();
+    console.log('### data', data);
+
+    const todos = Object.keys(data).map((key) => ({...data[key], id: key}));
+
+    dispatch({type: FETCH_TODOS, payload: {todos}});
+
+  };
+
   const removeTodo = (id) => dispatch({type: TODO_REMOVE, payload: {id}});
   const updateTodo = (todo) => dispatch({type: TODO_UPDATE, payload: {todo}});
 
@@ -55,10 +76,18 @@ export const TodoState: React.FC<Props> = ({children}) => {
     );
   };
 
+  const showLoader = () => dispatch({type: SHOW_LOADER});
+  const hideLoader = () => dispatch({type: HIDE_LOADER});
+  const showError = (error) => dispatch({type: SHOW_ERROR, payload: {error}});
+  const clearError = () => dispatch({type: CLEAR_ERROR});
+
 
   return (
     <TodoContext.Provider value={{
       todos: state.todos,
+      loadding: state.loading,
+      error: state.error,
+      fetchTodoList,
       addTodo,
       updateTodo,
       removeTodo,
